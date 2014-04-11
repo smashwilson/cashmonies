@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Cashmonies::VERSION
   spec.authors       = ["Ash Wilson"]
   spec.email         = ["smashwilson@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Track your personal finances in YAML.}
+  spec.description   = %q{Track your personal finances in YAML.}
+  spec.homepage      = "https://github.com/smashwilson/cashmonies"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
