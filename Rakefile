@@ -7,4 +7,3 @@ RSpec::Core::RakeTask.new(:spec)
 Rubocop::RakeTask.new
 
 task :default => [:spec, :rubocop]
-
