@@ -24,7 +24,11 @@ describe 'Dehasher' do
       expect { dehasher.integer(:text) }.to raise_error(WrongTypeError)
     end
 
-    it 'constrains to a date'
+    it 'constrains to a date' do
+      dehasher.time(:day).should == Time.new(2014, 1, 2)
+      expect { dehasher.time(:text) }.to raise_error(WrongTypeError)
+    end
+
     it 'constrains to a symbol'
     it 'constrains to an enum'
   end

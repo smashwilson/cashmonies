@@ -16,6 +16,13 @@ module Cashmonies
       typed(key, Integer)
     end
 
+    def time(key)
+      str = string(key)
+      m = str.match /^(\d{4})-(\d{2})-(\d{2})$/
+      raise WrongTypeError.new unless m
+      Time.new(m[1].to_i, m[2].to_i, m[3].to_i)
+    end
+
     private
 
     def raw(key)
