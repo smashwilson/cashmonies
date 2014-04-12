@@ -59,21 +59,19 @@ describe 'Account' do
 
         case month
         when '2014-01'
-          expect(ds).to be(%w{a b})
+          expect(ds).to eq(%w{a b})
         when '2014-02'
-          expect(ds).to be(%w{d})
+          expect(ds).to eq(%w{d})
         when '2014-03'
-          expect(ds).to be(%w{e})
-        when /2014-0(4|5)/
-          expect(ds).to be_empty?
+          expect(ds).to eq(%w{e})
         when '2014-06'
-          expect(ds).to be(%w{c})
+          expect(ds).to eq(%w{c})
         else
           fail "Unexpected month: #{month}"
         end
       end
 
-      expect(seen).to be(%w{2014-01 2014-02 2014-03 2014-04 2014-05 2014-06})
+      expect(seen).to eq(%w{2014-01 2014-02 2014-03 2014-06})
     end
   end
 end
