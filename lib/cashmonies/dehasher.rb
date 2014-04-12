@@ -1,5 +1,4 @@
 module Cashmonies
-
   class WrongTypeError < RuntimeError
   end
 
@@ -9,6 +8,8 @@ module Cashmonies
   class ExtraAttributesError < RuntimeError
   end
 
+  # Deserialization helper for model classes' #from_h methods. Enforces types and expected hash
+  # keys.
   class Dehasher
     attr_reader :handled
 
@@ -27,8 +28,8 @@ module Cashmonies
 
     def time(key)
       str = string(key)
-      m = str.match /^(\d{4})-(\d{2})-(\d{2})$/
-      raise WrongTypeError.new unless m
+      m = str.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+      fail WrongTypeError, "#{key} must be a date in YYYY-MM-DD format, was <#{str}>" unless m
       Time.new(m[1].to_i, m[2].to_i, m[3].to_i)
     end
 
@@ -38,7 +39,9 @@ module Cashmonies
 
     def enum(key, *valid)
       symbol(key).tap do |sym|
-        raise WrongTypeError.new unless valid.include? sym
+        unless valid.include? sym
+          fail WrongTypeError, "#{key} must be one of #{valid.join ', '}, was '#{sym}'"
+        end
       end
     end
 
@@ -46,7 +49,9 @@ module Cashmonies
       dehasher = new(hash)
       result = yield dehasher
       remaining = hash.keys.map(&:to_sym) - dehasher.handled
-      raise ExtraAttributesError.new unless remaining.empty?
+      unless remaining.empty?
+        fail ExtraAttributesError, "Unrecognized attributes: #{remaining.join ', '}"
+      end
       result
     end
 
@@ -55,15 +60,16 @@ module Cashmonies
     def raw(key)
       handled << key.to_sym
       @hash[key.to_s] || @hash[key.to_sym] || begin
-        raise MissingAttributesError.new
+        fail MissingAttributesError, "Missing required attribute: <#{key}>"
       end
     end
 
     def typed(key, klass)
       raw(key).tap do |raw|
-        raise WrongTypeError.new unless raw.kind_of? klass
+        unless raw.kind_of? klass
+          fail WrongTypeError, "Wrong type: expected #{klass}, got #{raw.inspect}"
+        end
       end
     end
   end
-
 end

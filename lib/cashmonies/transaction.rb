@@ -1,7 +1,7 @@
 require 'securerandom'
 
 module Cashmonies
-
+  # Money going into or leaving a particular Account.
   class Transaction
     attr_accessor :timestamp, :code, :description, :amount
     attr_reader :uuid
@@ -35,5 +35,4 @@ module Cashmonies
       end
     end
   end
-
 end

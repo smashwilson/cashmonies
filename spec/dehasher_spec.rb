@@ -13,30 +13,30 @@ describe 'Dehasher' do
   let(:dehasher) { Dehasher.new(hash) }
 
   it 'allows access by String' do
-    dehasher.string('text').should == 'blerp'
+    expect(dehasher.string('text')).to eq('blerp')
   end
 
   it 'allows access by Symbol' do
-    dehasher.string(:text).should == 'blerp'
+    expect(dehasher.string(:text)).to eq('blerp')
   end
 
   describe 'type constraints' do
     it 'constrains to an Integer' do
-      dehasher.integer(:numeric).should == 1234
+      expect(dehasher.integer(:numeric)).to eq(1234)
       expect { dehasher.integer(:text) }.to raise_error(WrongTypeError)
     end
 
     it 'constrains to a date' do
-      dehasher.time(:day).should == Time.new(2014, 1, 2)
+      expect(dehasher.time(:day)).to eq(Time.new(2014, 1, 2))
       expect { dehasher.time(:text) }.to raise_error(WrongTypeError)
     end
 
     it 'constrains to a symbol' do
-      dehasher.symbol(:symbolic).should == :Monday
+      expect(dehasher.symbol(:symbolic)).to eq(:Monday)
     end
 
     it 'constrains to an enum' do
-      dehasher.enum(:symbolic, :Monday, :Tuesday, :Wednesday).should == :Monday
+      expect(dehasher.enum(:symbolic, :Monday, :Tuesday, :Wednesday)).to eq(:Monday)
       expect { dehasher.enum(:symbolic, :nope) }.to raise_error(WrongTypeError)
     end
   end

@@ -1,0 +1,8 @@
+LineLength:
+  Max: 100
+
+AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+MethodLength:
+  Max: 20

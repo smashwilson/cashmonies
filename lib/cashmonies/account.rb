@@ -1,5 +1,5 @@
 module Cashmonies
-
+  # A place we put or take money from. An Account has many Transactions.
   class Account
     attr_accessor :name, :lastfour, :kind
     attr_reader :transactions
@@ -52,5 +52,4 @@ module Cashmonies
       end
     end
   end
-
 end

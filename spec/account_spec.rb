@@ -7,25 +7,24 @@ describe 'Account' do
     a.lastfour = 1234
     a.kind = :debt
 
-    a.to_h.should == {
+    expect(a.to_h).to eq(
       'name' => 'Personal',
       'lastfour' => 1234,
       'kind' => :debt
-    }
+    )
   end
 
   it 'deserializes itself from a Hash' do
-    a = Account.from_h({
+    a = Account.from_h(
       'name' => 'Derp',
       'lastfour' => 4321,
       'kind' => 'savings'
-    })
+    )
 
-    a.name.should == 'Derp'
-    a.lastfour.should == 4321
-    a.kind.should == :savings
+    expect(a.name).to eq('Derp')
+    expect(a.lastfour).to eq(4321)
+    expect(a.kind).to eq(:savings)
   end
-
 
   describe 'transactions' do
     let(:account) do
@@ -38,7 +37,7 @@ describe 'Account' do
         { uuid: '2', timestamp: '2014-01-02', code: :food, description: 'b', amount: 200 },
         { uuid: '3', timestamp: '2014-06-24', code: :house, description: 'c', amount: 300 },
         { uuid: '4', timestamp: '2014-02-05', code: :coop, description: 'd', amount: 400 },
-        { uuid: '5', timestamp: '2014-03-11', code: :gas, description: 'e', amount: 500 },
+        { uuid: '5', timestamp: '2014-03-11', code: :gas, description: 'e', amount: 500 }
       ].map { |h| Transaction.from_h(h) }
     end
 
@@ -48,30 +47,30 @@ describe 'Account' do
 
     it 'enumerates in time order' do
       ordered = account.ordered_transactions.map(&:description)
-      ordered.should == %w{a b d e c}
+      expect(ordered).to eq(%w(a b d e c))
     end
 
     it 'enumerates month by month' do
       seen = []
       account.transactions_by_month do |month, txs|
         seen << month
-        ds = txs.map &:description
+        ds = txs.map(&:description)
 
         case month
         when '2014-01'
-          expect(ds).to eq(%w{a b})
+          expect(ds).to eq(%w(a b))
         when '2014-02'
-          expect(ds).to eq(%w{d})
+          expect(ds).to eq(%w(d))
         when '2014-03'
-          expect(ds).to eq(%w{e})
+          expect(ds).to eq(%w(e))
         when '2014-06'
-          expect(ds).to eq(%w{c})
+          expect(ds).to eq(%w(c))
         else
           fail "Unexpected month: #{month}"
         end
       end
 
-      expect(seen).to eq(%w{2014-01 2014-02 2014-03 2014-06})
+      expect(seen).to eq(%w(2014-01 2014-02 2014-03 2014-06))
     end
   end
 end
