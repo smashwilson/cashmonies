@@ -3,7 +3,7 @@ require_relative 'spec_helper'
 describe 'Storage' do
   let(:storage) { Storage.new }
 
-  it 'reads Transactions from a YAML file' do
+  it 'loads Transactions from a YAML file' do
     ts = storage.load_transactions(fixture_path 'transactions.yml')
     expect(ts.length).to eq(3)
 
@@ -24,6 +24,13 @@ describe 'Storage' do
     expect(ts[2].code).to be(:house)
     expect(ts[2].description).to eq('stuff')
     expect(ts[2].amount).to eq(4500)
+  end
+
+  it 'loads Account metadata from a YAML file' do
+    a = storage.load_account(fixture_path 'account.yml')
+    expect(a.name).to eq('Primary Checking')
+    expect(a.lastfour).to eq(9999)
+    expect(a.kind).to eq(:checking)
   end
 
   it 'reads an Account from a directory'
