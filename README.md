@@ -1,5 +1,7 @@
 # Cashmonies
 
+[![Build Status](https://travis-ci.org/smashwilson/cashmonies.svg?branch=master)](https://travis-ci.org/smashwilson/cashmonies)
+
 Rather than rely on mobile banking, we track receipts and balance against bank statements in a
 spreadsheet. This works okay, but it's kind of pain, and writing formulas and pivot tables for all
 of the kinds of reports and budgeting we want to do feels fragile. Since I'm an engineer, I'm
