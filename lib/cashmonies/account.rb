@@ -2,6 +2,15 @@ module Cashmonies
 
   class Account
     attr_accessor :name, :lastfour, :kind
+    attr_reader :transactions
+
+    def initialize
+      @transactions = []
+    end
+
+    def ordered_transactions
+      @transactions.sort
+    end
 
     def to_h
       {

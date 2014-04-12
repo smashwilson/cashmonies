@@ -10,6 +10,10 @@ module Cashmonies
       @uuid = uuid || SecureRandom.uuid
     end
 
+    def <=>(other)
+      @timestamp <=> other.timestamp
+    end
+
     def to_h
       {
         'uuid' => @uuid,
