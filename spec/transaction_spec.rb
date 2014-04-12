@@ -33,5 +33,9 @@ describe 'Transaction' do
     t.amount.should == 1500
   end
 
-  it 'assigns each Transaction a unique identifier'
+  it 'assigns each Transaction a unique identifier' do
+    t1 = Transaction.new
+    t2 = Transaction.new
+    t1.uuid.should_not == t2.uuid
+  end
 end
