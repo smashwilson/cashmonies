@@ -1,29 +1,25 @@
 # Cashmonies
 
-TODO: Write a gem description
+Rather than rely on mobile banking, we track receipts and balance against bank statements in a
+spreadsheet. This works okay, but it's kind of pain, and writing formulas and pivot tables for all
+of the kinds of reports and budgeting we want to do feels fragile. Since I'm an engineer, I'm
+solving this the same way that I solve everything: by writing software.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install cashmonies thusly:
 
-    gem 'cashmonies'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install cashmonies
+```bash
+$ gem install cashmonies
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+*(coming soon)*
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/cashmonies/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+[GitHub flow](https://guides.github.com/overviews/flow/) or bust! Pull requests are welcome at any
+stage of development. Mark them `[wip]` if you're not ready to merge yet. To be accepted, write
+specs, and let [rubocop](https://github.com/bbatsov/rubocop) chastise you into the preferred
+style.
