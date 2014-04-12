@@ -12,10 +12,12 @@ module Cashmonies
     end
 
     def self.from_h(hash)
-      Account.new.tap do |a|
-        a.name = hash['name']
-        a.lastfour = hash['lastfour']
-        a.kind = hash['kind'].to_sym
+      Dehasher.dehash(hash) do |h|
+        Account.new.tap do |a|
+          a.name = h.string(:name)
+          a.lastfour = h.integer(:lastfour)
+          a.kind = h.enum(:kind, :checking, :savings, :debt)
+        end
       end
     end
   end

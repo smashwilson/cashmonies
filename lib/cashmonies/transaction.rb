@@ -21,11 +21,13 @@ module Cashmonies
     end
 
     def self.from_h(hash)
-      Transaction.new(hash['uuid']).tap do |t|
-        t.timestamp = Time.parse(hash['timestamp'])
-        t.code = hash['code'].to_sym
-        t.description = hash['description']
-        t.amount = hash['amount'].to_i
+      Dehasher.dehash(hash) do |h|
+        Transaction.new(h.string(:uuid)).tap do |t|
+          t.timestamp = h.time(:timestamp)
+          t.code = h.symbol(:code)
+          t.description = h.string(:description)
+          t.amount = h.integer(:amount)
+        end
       end
     end
   end
