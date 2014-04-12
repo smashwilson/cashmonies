@@ -1,0 +1,18 @@
+---
+- uuid: '13'
+  timestamp: 2013-11-01
+  code: food
+  description: groceries
+  amount: 9000
+
+- uuid: '14'
+  timestamp: 2013-11-02
+  code: food
+  description: groceries
+  amount: 1000
+
+- uuid: '15'
+  timestamp: 2013-11-03
+  code: house
+  description: stuff
+  amount: 4500

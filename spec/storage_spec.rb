@@ -33,7 +33,18 @@ describe 'Storage' do
     expect(a.kind).to eq(:checking)
   end
 
-  it 'reads an Account from a directory'
+  it 'load Accounts from a directory' do
+    s = Storage.load(fixture_path 'root')
+
+    checking = s.accounts.find { |a| a.name == 'Fat Sacks of Cash' }
+    checking_ids = checking.transactions.map(&:uuid)
+    expect(checking_ids).to eq(%w(1 2 3 4 5 6 7 8 9 10 11 12))
+
+    savings = s.accounts.find { |a| a.name == 'Under the Mattress' }
+    savings_ids = savings.transactions.map(&:uuid)
+    expect(savings_ids).to eq(%w(13 14 15 16 17 18 19 20 21 22 23 24))
+  end
+
   it 'writes Transactions to a YAML file'
   it 'writes Accounts to a directory'
 end
