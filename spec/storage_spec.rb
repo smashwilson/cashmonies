@@ -3,6 +3,16 @@ require_relative 'spec_helper'
 describe 'Storage' do
   let(:storage) { Storage.new }
 
+  def fs_cleanup
+    %w(sample_tx.yml).each do |path|
+      fp = fixture_path(path)
+      File.delete(fp) if File.exist? fp
+    end
+  end
+
+  before { fs_cleanup }
+  after { fs_cleanup }
+
   it 'loads Transactions from a YAML file' do
     ts = storage.load_transactions(fixture_path 'transactions.yml')
     expect(ts.length).to eq(3)
@@ -45,6 +55,19 @@ describe 'Storage' do
     expect(savings_ids).to eq(%w(13 14 15 16 17 18 19 20 21 22 23 24))
   end
 
-  it 'writes Transactions to a YAML file'
+  it 'writes Transactions to a YAML file' do
+    ts = [
+      { uuid: '1', timestamp: '2014-01-01', code: :foo, description: 'a', amount: 100 },
+      { uuid: '2', timestamp: '2014-01-02', code: :foo, description: 'b', amount: 100 },
+      { uuid: '3', timestamp: '2014-01-03', code: :foo, description: 'c', amount: 100 },
+      { uuid: '4', timestamp: '2014-01-04', code: :foo, description: 'd', amount: 100 }
+    ].map { |h| Transaction.from_h h }
+
+    storage.store_transactions(ts, fixture_path('sample_tx.yml'))
+    outs = storage.load_transactions(fixture_path('sample_tx.yml'))
+    expect(outs.size).to eq(4)
+    expect(outs.map(&:uuid)).to eq(%w(1 2 3 4))
+  end
+
   it 'writes Accounts to a directory'
 end

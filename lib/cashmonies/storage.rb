@@ -12,12 +12,18 @@ module Cashmonies
       @accounts = []
     end
 
-    def load_transactions(file)
-      YAML.load_file(file).map { |h| Transaction.from_h h }
+    def load_transactions(path)
+      YAML.load_file(path).map { |h| Transaction.from_h h }
     end
 
-    def load_account(file)
-      Account.from_h YAML.load_file(file)
+    def store_transactions(transactions, path)
+      File.open(path, 'w') do |outf|
+        YAML.dump(transactions.map(&:to_h), outf)
+      end
+    end
+
+    def load_account(path)
+      Account.from_h YAML.load_file(path)
     end
 
     def self.load(root)
