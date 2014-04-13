@@ -26,6 +26,12 @@ module Cashmonies
       Account.from_h YAML.load_file(path)
     end
 
+    def store_account(account, path)
+      File.open(path, 'w') do |outf|
+        YAML.dump(account.to_h, outf)
+      end
+    end
+
     def self.load(root)
       new.tap do |s|
         subdirs(root).each do |adir|

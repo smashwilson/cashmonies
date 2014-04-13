@@ -4,7 +4,7 @@ describe 'Storage' do
   let(:storage) { Storage.new }
 
   def fs_cleanup
-    %w(sample_tx.yml).each do |path|
+    %w(sample_tx.yml sample_acct.yml).each do |path|
       fp = fixture_path(path)
       File.delete(fp) if File.exist? fp
     end
@@ -69,5 +69,11 @@ describe 'Storage' do
     expect(outs.map(&:uuid)).to eq(%w(1 2 3 4))
   end
 
-  it 'writes Accounts to a directory'
+  it 'writes Accounts to a YAML file' do
+    a = Account.from_h name: 'Primary Checking', lastfour: 1000, kind: :checking
+
+    storage.store_account(a, fixture_path('sample_acct.yml'))
+    out = storage.load_account(fixture_path('sample_acct.yml'))
+    expect(out.name).to eq('Primary Checking')
+  end
 end
